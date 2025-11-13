@@ -17,13 +17,21 @@ const SECRET_KEY = process.env.SECRET_KEY;
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use("/", router);
+
 
 // Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("Connected to MongoDB"))
+  .then(() => {
+    console.log("Connected to MongoDB");
+    app.listen(PORT, () => {
+  console.log(` Server running on http://localhost:${PORT}`);
+});
+
+   })
   .catch((err) => console.error(" MongoDB connection error:", err));
+
+  app.use("/", router);
 
 // Test route
 router.get("/", (req, res) => {
@@ -34,11 +42,6 @@ router.get("/", (req, res) => {
 router.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
-
-    const existing = await User.findOne({ email });
-    if (existing)
-      return res.status(400).json({ message: "Email already exists" });
-
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
@@ -81,6 +84,3 @@ router.get("/profile", (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
