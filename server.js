@@ -1,18 +1,18 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "./model/userModel.js";
 
-dotenv.config();
+// dotenv.config();
 
 const app = express();
 const router = express.Router();
 
-const PORT = process.env.PORT || 3000;
-const SECRET_KEY = process.env.SECRET_KEY;
+const PORT =  3000;
+const SECRET_KEY = 18/12/2002;
 
 // Middleware
 app.use(cors());
@@ -21,7 +21,7 @@ app.use(express.json());
 
 // Connect to MongoDB
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect('mongodb+srv://kabz:18122002kabera@cluster0.jjuem2u.mongodb.net/?appName=Cluster0&retryWrites=true&w=majority')
   .then(() => {
     console.log("Connected to MongoDB");
     app.listen(PORT, () => {
