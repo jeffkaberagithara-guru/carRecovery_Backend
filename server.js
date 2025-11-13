@@ -10,7 +10,6 @@ dotenv.config();
 
 const app = express();
 const router = express.Router();
-
 const PORT =  process.env.PORT || 3000;
 const SECRET_KEY =process.env.SECRET_KEY;
 
@@ -19,10 +18,9 @@ app.use(cors());
 app.use(express.json());
 
 
-
 // Connect to MongoDB
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect('mongodb+srv://kabz:18122002kabera@cluster0.jjuem2u.mongodb.net/?appName=Cluster0&retryWrites=true&w=majority')
   .then(() => {
     console.log("Connected to MongoDB");
     app.listen(PORT, () => {
